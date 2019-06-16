@@ -14,6 +14,8 @@ app.get('',(req,res)=>{
     res.status(200).send('done');
 })
 
+app.use('/users',require('./Routers/usersRouter'));
+
 app.use((err,req,res,next)=>{
 console.error(err);
 res.status(500).send(err);
