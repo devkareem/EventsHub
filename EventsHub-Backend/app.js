@@ -11,6 +11,8 @@ app.use(dbConnect);
 
 app.use('/api/auth',auth);
 
+app.use('/users',require('./Routers/usersRouter'));
+
 app.use((err,req,res,next)=>{
 console.error(err);
 res.status(500).send({error:err.message});
