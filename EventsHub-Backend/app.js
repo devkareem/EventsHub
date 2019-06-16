@@ -2,6 +2,7 @@
 const express=require('express');
 const bodyParser=require('body-parser');
 const auth=require('./Routers/auth');
+const router=require('./Routers/events');
 const app=express();
 // Middlewares
 const dbConnect=require('./Middlewares/dbConnect');
@@ -10,6 +11,7 @@ app.use(bodyParser.json());
 app.use(dbConnect);
 
 app.use('/api/auth',auth);
+app.use('/api/events',router);
 
 app.use('/users',require('./Routers/usersRouter'));
 
