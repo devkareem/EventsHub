@@ -1,0 +1,38 @@
+<!-- <form class="form-signin" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <h2 class="form-signin-heading">Please sign in</h2>
+  <div class="form-group">
+    <label for="email" class="sr-only">E-Mail</label>
+    <input type="text" class="form-control" id="email" formControlName="email">
+    <div *ngIf="!myForm.get('email').valid" class="alert alert-danger">
+      Invalid Email
+    </div>
+  </div>
+
+
+  <div class="form-group">
+    <label for="password" class="sr-only">Password</label>
+    <input type="password" class="form-control" id="password" formControlName="password">
+  </div>
+ 
+  <button type="submit" class="btn btn-lg btn-primary btn-block" [disabled]="!myForm.valid">Submit</button>
+</form> -->
+
+
+<form class="example-form" [formGroup]="myForm" (ngSubmit)="onSubmit()">
+    <mat-form-field class="example-full-width">
+        <input matInput placeholder="Email" formControlName="email">
+        <mat-error *ngIf="!myForm.get('email').valid">
+          Please enter a valid email address
+        </mat-error>
+      </mat-form-field>
+       <mat-form-field class="example-full-width">
+          <input matInput placeholder="Password" formControlName="password">
+      
+          <mat-error *ngIf="!myForm.get('password').valid">
+            Password is <strong>required</strong>
+          </mat-error>
+        </mat-form-field> 
+        <button mat-raised-button color="primary" type="submit"  [disabled]="!myForm.valid">Submit</button>
+
+
+  </form>
