@@ -1,14 +1,18 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+
 import{Routes, RouterModule} from '@angular/router'
 import {MatInputModule} from '@angular/material/input';
-
+import { EventsComponent } from './events/events.component';
+import { MyCustomHttpService } from './services/CustomService';
+import { EventService } from './services/event.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule, Validators } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
+
 import {MatCardModule} from '@angular/material/card';
 import {MatSidenavModule} from '@angular/material/sidenav';
 import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -19,18 +23,26 @@ import { ToastrModule } from 'ngx-toastr';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
-
+import { UsersComponent } from './users/users.component';
+import {MatRadioModule} from '@angular/material/radio';
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
 {path:'**',redirectTo:'Home'}];
 
+
 @NgModule({
   declarations: [
     AppComponent,
+
     LoginComponent,
     HomeComponent,
+
     MainNavComponent
+
+    UsersComponent,
+    EventsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -39,6 +51,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
+
     MatCardModule,
     MatSidenavModule,
     HttpClientModule,
@@ -46,9 +59,12 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     LayoutModule,
     MatToolbarModule,
     MatIconModule,
-    MatListModule
+    MatListModule,
+    MatRadioModule,
+    FormsModule
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }

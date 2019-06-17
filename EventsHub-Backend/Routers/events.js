@@ -4,7 +4,7 @@ const mongo= require('mongodb');
 // Retrive all events from database
 router.get('/', async (req, res,next)=>{
     try{
-await req.db.collection("Events").find({}).toArray(
+await req.db.collection("Events").find({'owner':{'_id':req.user._id}}).toArray(
     (err,data)=>{
         res.json(data);
         next(err);
@@ -19,6 +19,7 @@ catch(err){
 )
 // Retrieve event with the given id from database
 router.get('/:eventId', async (req,res,next)=>{
+    req.user
     try{
         const id= new mongo.ObjectID(req.params.eventId);
     const result= await req.db.collection("Events").findOne({_id:id});
@@ -29,11 +30,16 @@ router.get('/:eventId', async (req,res,next)=>{
     }
 
 });
+router.get('/:userId', async (req,res,next)=>{
+
+})
 
 // Create event
 router.post('/', async (req,res,next)=>{
     try{
-    await req.db.collection("Events").insertOne(req.body, 
+        const body=req.body;
+        body.owner=req.user;
+    await req.db.collection("Events").insertOne(body, 
         (err, results) => {res.json(results);
         next(err);})
     }
