@@ -9,8 +9,10 @@
   "author": "Group-8",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^8.0.0",
     "express": "^4.17.1",
+    "helmet": "^3.18.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.0"
   }
