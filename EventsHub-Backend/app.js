@@ -14,6 +14,7 @@ app.use(bodyParser.json());
 app.use(dbConnect);
 
 
+
 //app.all("*",authMiddle);
 //app.use('/api/auth',auth);
 //app.use('/api/events',router);
