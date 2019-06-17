@@ -11,7 +11,7 @@ app.use(bodyParser.json());
 app.use(dbConnect);
 
 app.use('/api/auth',auth);
-app.use('/api/events',router);
+app.use('/events',router);
 
 app.use('/users',require('./Routers/usersRouter'));
 
