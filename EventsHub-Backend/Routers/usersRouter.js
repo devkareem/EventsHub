@@ -5,35 +5,35 @@ const userRoute = express.Router({caseSensitive:false,strict:true});
 
 let dbCol;
 userRoute.all('*',(req,res,next) => {
-    dbCol = req.db.collection('Users');
+    dbCol = req.db.users;
     return next();
 });
 
-//(/users)
 userRoute.get('/', async (req,res) => {
-    let result = await dbCol.find({}).toArray();
+    let result = await dbCol.find({});
     res.status(200).json({status: 'OK', data : result});
 });
 
-userRoute.get('/profile', async (req,res,next) => {
+userRoute.get('/:userId', async (req,res,next) => {
     //req.users._id
-    let result = await dbCol.findOne({_id : new mongo.ObjectID(req.params.userId)});
+    let result = await dbCol.findById(new mongo.ObjectID(req.params.userId));
     res.status(200).json({status: 'OK', data : result });
 });
 
 userRoute.post('/',async (req,res) => {
-    let result = await dbCol.insertOne(request.body);
+    console.log(req.body);
+    let result = await dbCol.create(req.body);
     res.status(201).json({status: 'OK',data : result});
 });
 
 userRoute.patch('/:userId',async (req,res) => {
-    let result = await dbCol.updateOne({_id : new mongo.ObjectID(req.params.userId)},
-    {$set : request.body} );
+    let result = await dbCol.findOneAndUpdate({_id : new mongo.ObjectID(req.params.userId)},
+    {$set : req.body}, {useFindAndModify : false} );
     res.status(201).json({status: 'OK',data : result});
 });
 
 userRoute.delete('/:userId',async (req,res) =>{
-    let result = dbCol.remove({_id : new mongo.ObjectID(req.params.userId)})
+    let result = await dbCol.findOneAndDelete({_id : new mongo.ObjectID(req.params.userId)}, {useFindAndModify : false} )
     res.status(202).json({status: 'OK', data: result});
 });
 

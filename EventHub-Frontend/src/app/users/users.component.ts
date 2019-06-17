@@ -16,31 +16,33 @@ import { UsersServiceService } from '../Services/users-service.service'
 })
 export class UsersComponent implements OnInit {
   userForm: FormGroup;
-  genders = [
+  genders:String[] = [
     'Male',
     'Female'
   ];
 
-  constructor(private formBuilder: FormBuilder, public ru : UsersServiceService) {
+  constructor(private formBuilder: FormBuilder, public ru: UsersServiceService) {
     this.userForm = formBuilder.group({
       'email': ['', [
         Validators.required,
         Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
       ]],
-      'passwordGroup' : formBuilder.group({
-      'password': ['', [
-        Validators.required,
-        Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')]],
-      'confirmPassword': ['', [Validators.required]]
-      },{validator: this.confirmPasswordValidator}),
-      'username': ['', Validators.required],
+      'passwordGroup': formBuilder.group({
+        'password': ['', [
+          Validators.required//,
+          //Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
+        ]],
+        'confirmPassword': ['', [Validators.required]]
+      //}, { validator: this.confirmPasswordValidator }),
+    }),
+      'name': ['', Validators.required],
       'phone': [''],
       'gender': [''],
-      'userAddress': formBuilder.group({
-        'state': ['', [Validators.required]],
-        'city': ['', [Validators.required]],
-        'street': ['', [Validators.required]],
-        'zipCode': ['', [Validators.required]]
+      'address': formBuilder.group({
+        'state': ['', []],
+        'city': ['', []],
+        'street': ['', []],
+        'zipCode': ['', []]
       })
     });
 
@@ -52,6 +54,7 @@ export class UsersComponent implements OnInit {
   }
 
   onSubmit() {
+    this.userForm.value.password = this.userForm.value.passwordGroup.password;
     console.log(this.userForm.value);
     this.ru.registerNewUser(this.userForm.value);
   }
@@ -60,10 +63,10 @@ export class UsersComponent implements OnInit {
   }
 
   confirmPasswordValidator(group: FormGroup) { // here we have the 'passwords' group
-  let pass = group.controls.password.value;
-  let confirmPass = group.controls.confirmPassword.value;
+    let pass = group.controls.password.value;
+    let confirmPass = group.controls.confirmPassword.value;
 
-  return pass === confirmPass ? null : { notSame: true }     
-}
+    return pass === confirmPass ? null : { notSame: true }
+  }
 
 }
