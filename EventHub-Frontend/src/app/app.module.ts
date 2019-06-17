@@ -9,17 +9,22 @@ import { ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
+import { UsersComponent } from './users/users.component';
+import {MatRadioModule} from '@angular/material/radio';
+import { HttpClientModule } from '@angular/common/http';
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent},
+{path:'users', component: UsersComponent },
 {path:'**',redirectTo:'Home'}];
 
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-    HomeComponent
+    HomeComponent,
+    UsersComponent
   ],
   imports: [
     BrowserModule,
@@ -27,7 +32,10 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     RouterModule.forRoot(MY_ROUTE),
     BrowserAnimationsModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatRadioModule,
+    HttpClientModule
+      
   ],
   providers: [],
   bootstrap: [AppComponent]

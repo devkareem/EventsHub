@@ -1,0 +1,58 @@
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+
+  <h2>User Registeration</h2>
+  <mat-form-field class="example-full-width">
+    <!-- <label for="email">E-Mail</label> -->
+    <input matInput placeholder="Enter your E-mail" id="email" formControlName="email">
+    <!-- <div *ngIf="!userForm.get('email').valid">
+      Invalid Email
+    </div> -->
+  </mat-form-field>
+
+  <div formGroupName="passwordGroup">
+    <mat-form-field class="example-full-width">
+      <!-- <label for="password">Password</label> -->
+      <input type="password" matInput placeholder="Enter Password" id="password" formControlName="password">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <!-- <label for="confirmPassword">Confirm Password</label> -->
+      <input type="password" matInput placeholder="Confirm Password" id="confirmPassword" formControlName="confirmPassword">
+    </mat-form-field>
+  </div>
+  <mat-form-field class="example-full-width">
+    <!-- <label for="username">Username</label> -->
+    <input type="text" matInput placeholder="Your Name" id="name" formControlName="name">
+  </mat-form-field>
+  <mat-form-field class="example-full-width">
+    <!-- <label for="phone">Phone</label> -->
+    <input type="text" matInput placeholder="Phone Number" id="phone" formControlName="phone">
+  </mat-form-field>
+
+  <mat-radio-group formControlName="gender" aria-label="Select an option" >
+      <mat-radio-button  *ngFor="let g of genders" [value]="g">{{g}}</mat-radio-button>
+  </mat-radio-group>
+
+  <div formGroupName="address">
+    <mat-form-field class="example-full-width">
+      <!-- <label for="state">State</label> -->
+      <input type="text" matInput placeholder="State" id="state" formControlName="state">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <!-- <label for="city">City</label> -->
+      <input type="text" matInput placeholder="City" id="city" formControlName="city">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <!-- <label for="street">Street</label> -->
+      <input type="text" matInput placeholder="Street" id="street" formControlName="street">
+    </mat-form-field>
+
+    <mat-form-field class="example-full-width">
+      <!-- <label for="zipCode">Zipcode</label> -->
+      <input type="text" matInput placeholder="Zipcode" id="zipCode" formControlName="zipCode">
+    </mat-form-field>
+  </div>
+  <button type="submit" mat-raised-button color="warn" [disabled]="!userForm.valid">Register</button>
+</form>
