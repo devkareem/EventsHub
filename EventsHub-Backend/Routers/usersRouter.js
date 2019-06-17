@@ -9,6 +9,7 @@ userRoute.all('*',(req,res,next) => {
     return next();
 });
 
+
 userRoute.get('/', async (req,res) => {
     let result = await dbCol.find({});
     res.status(200).json({status: 'OK', data : result});
@@ -34,6 +35,7 @@ userRoute.patch('/:userId',async (req,res) => {
 
 userRoute.delete('/:userId',async (req,res) =>{
     let result = await dbCol.findOneAndDelete({_id : new mongo.ObjectID(req.params.userId)}, {useFindAndModify : false} )
+
     res.status(202).json({status: 'OK', data: result});
 });
 

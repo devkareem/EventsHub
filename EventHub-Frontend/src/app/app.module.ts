@@ -12,14 +12,22 @@ import { FormsModule,ReactiveFormsModule, Validators } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
+
+import {MatCardModule} from '@angular/material/card';
+import {MatSidenavModule} from '@angular/material/sidenav';
+import { HttpClientModule, HttpClient, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthService } from './auth.service';
+import { TokenInterceptor } from './token.interceptor';
+import { AuthGuard } from './guards/auth.guard';
+import { ToastrModule } from 'ngx-toastr';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { LayoutModule } from '@angular/cdk/layout';
+import { MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
 import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
-import { HttpClientModule } from '@angular/common/http';
-
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
-{path:'Home',component:HomeComponent},
-{path:'users', component: UsersComponent },
+{path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
 {path:'**',redirectTo:'Home'}];
 
 
@@ -29,8 +37,12 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 
     LoginComponent,
     HomeComponent,
+
+    MainNavComponent
+
     UsersComponent,
     EventsComponent
+
   ],
   imports: [
     BrowserModule,
@@ -39,13 +51,20 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
-    MatRadioModule,
-    HttpClientModule,
-    FormsModule
-      
 
+    MatCardModule,
+    MatSidenavModule,
+    HttpClientModule,
+    ToastrModule.forRoot(),
+    LayoutModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatListModule,
+    MatRadioModule,
+    FormsModule
   ],
-  providers: [MyCustomHttpService, EventService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService],
+
   bootstrap: [AppComponent]
 })
 export class AppModule { }
