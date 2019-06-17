@@ -15,6 +15,7 @@ app.all("*",authMiddle);
 app.use('/api/auth',auth);
 app.use('/api/events',router);
 
+//user Router
 app.use('/users',require('./Routers/usersRouter'));
 
 app.use((err,req,res,next)=>{
