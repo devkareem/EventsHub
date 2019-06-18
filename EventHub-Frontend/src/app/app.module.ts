@@ -29,11 +29,13 @@ import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { UsersServiceService } from './Services/users-service.service';
+import { UpdateEventComponent } from './events/update-event/update-event.component';
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
 {path:'events',component:EventsComponent,canActivate:[AuthGuard]},
+{path:'events/update',component:UpdateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
 {path:'**',redirectTo:'Home'}];
@@ -51,7 +53,8 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     UsersComponent,
     EventsComponent,
     UpdateUserComponent,
-    FirstLetterUppercasePipe
+    FirstLetterUppercasePipe,
+    UpdateEventComponent
 
   ],
   imports: [
@@ -75,7 +78,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatSelectModule
     
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard, EventService,UsersServiceService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService],
 
   bootstrap: [AppComponent]
 })
