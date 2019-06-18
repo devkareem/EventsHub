@@ -8,6 +8,8 @@
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/home">Home</a>
       <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()"  routerLink="/login" (click)="authService.logout()">Logout</a>
+      <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/users">Register</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/edit">Update Profile</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

@@ -8,9 +8,10 @@ var cors = require('cors')
 const helmet=require('helmet');
 const dbConnect=require('./Middlewares/dbConnect');
 // 
-//app.use(require('cors'));
-
 const app=express();
+
+app.use(cors());
+
 // Middlewares
 app.use(cors())
 app.use(helmet());
@@ -23,6 +24,11 @@ app.use('/api/auth',auth);
 app.use('/api/events',authMiddle,router);
 app.use('/users',authMiddle,require('./Routers/usersRouter'));
 
+app.post('/register',async (req,res) => {
+    console.log(req.body);
+    let result = await req.db.users.create(req.body);
+    res.status(201).json({status: 'OK',data : result});
+});
 
 app.use((err,req,res,next)=>{
 console.error(err);

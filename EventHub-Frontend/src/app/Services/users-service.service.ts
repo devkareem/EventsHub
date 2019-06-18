@@ -18,18 +18,27 @@ export class UsersServiceService {
 
   registerNewUser(usersData) {
     this.users = usersData;
-    this.http.post('http://localhost:8080/users', usersData).subscribe((res) => {
-      console.log(res);
+    this.http.post('http://localhost:8080/register', usersData).subscribe((res) => {
+      //console.log(res);
     });
   }
 
-  getCurrentUserData() {
-    this.http.get('http://localhost:8080/users/5d076a30ef041b094060f4cc').subscribe((res:any) => { 
-      if(res.status === 'OK' ){
-        this.users = res.data;
-        console.log(this.users);
-      }
+  getCurrentUserData(userId:string) {
+    console.log(userId);
+    return this.http.get('http://localhost:8080/users/' + userId);
+  }
+
+  getAllUsers() {
+    return this.http.get('http://localhost:8080/users');
+  }
+
+  UpdateUser(userId:string,usersData) {
+    this.http.put('http://localhost:8080/users/' + userId,usersData).subscribe((res) => {
+      //console.log(res);
     });
-    return this.users;
+  }
+
+  DeleteUser(userId:string) {
+    return this.http.delete('http://localhost:8080/users/' + userId);
   }
 }

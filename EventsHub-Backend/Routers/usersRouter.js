@@ -9,7 +9,6 @@ userRoute.all('*',(req,res,next) => {
     return next();
 });
 
-
 userRoute.get('/', async (req,res) => {
     let result = await dbCol.find({});
     res.status(200).json({status: 'OK', data : result});
@@ -21,13 +20,7 @@ userRoute.get('/:userId', async (req,res,next) => {
     res.status(200).json({status: 'OK', data : result });
 });
 
-userRoute.post('/',async (req,res) => {
-    console.log(req.body);
-    let result = await dbCol.create(req.body);
-    res.status(201).json({status: 'OK',data : result});
-});
-
-userRoute.patch('/:userId',async (req,res) => {
+userRoute.put('/:userId',async (req,res) => {
     let result = await dbCol.findOneAndUpdate({_id : new mongo.ObjectID(req.params.userId)},
     {$set : req.body}, {useFindAndModify : false} );
     res.status(201).json({status: 'OK',data : result});
