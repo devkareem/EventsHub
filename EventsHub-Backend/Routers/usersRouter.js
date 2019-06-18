@@ -32,4 +32,10 @@ userRoute.delete('/:userId',async (req,res) =>{
     res.status(202).json({status: 'OK', data: result});
 });
 
+userRoute.put('/writecomment/:eventId',async (req,res) => {
+    let result = await req.db.events.findOneAndUpdate({_id : new mongo.ObjectID(req.params.eventId)},
+    {$push : { comments : req.body} }, {useFindAndModify : false} );
+    res.status(201).json({status: 'OK',data : result});
+});
+
 module.exports =  userRoute ;

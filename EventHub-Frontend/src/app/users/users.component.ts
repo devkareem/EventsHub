@@ -26,7 +26,6 @@ export class UsersComponent implements OnInit {
   public isUpdate = false;
 
   constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService) {
-
     this.userForm = this.formBuilder.group({
       'email': ['', [
         Validators.required,

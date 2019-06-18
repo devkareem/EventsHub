@@ -41,4 +41,9 @@ export class UsersServiceService {
   DeleteUser(userId:string) {
     return this.http.delete('http://localhost:8080/users/' + userId);
   }
+
+  writeCommentOnEvent(eventId : string, commentData)
+  {
+    return this.http.put('http://localhost:8080/users/writecomment' + eventId,commentData);
+  }
 }

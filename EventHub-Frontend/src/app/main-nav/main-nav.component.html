@@ -11,6 +11,7 @@
       <a mat-list-item *ngIf="authService.isLoggedIn()"  routerLink="/login" (click)="authService.logout()">Logout</a>
       <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/users">Register</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/edit">Update Profile</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/invitedevents">Invited Events</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

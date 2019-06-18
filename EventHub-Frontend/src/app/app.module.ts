@@ -26,6 +26,8 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+import { UserEventComponent } from './user-event/user-event.component';
+import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { UsersServiceService } from './Services/users-service.service';
@@ -36,6 +38,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'events',component:EventsComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
+{path:'users/invitedevents',component:UserEventComponent},
 {path:'**',redirectTo:'Home'}];
 
 
@@ -51,7 +54,8 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     UsersComponent,
     EventsComponent,
     UpdateUserComponent,
-    FirstLetterUppercasePipe
+    FirstLetterUppercasePipe,
+    UserEventComponent
 
   ],
   imports: [
@@ -74,6 +78,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     FormsModule,
     MatSelectModule
     
+    MatGridListModule
   ],
   providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard, EventService,UsersServiceService],
 
