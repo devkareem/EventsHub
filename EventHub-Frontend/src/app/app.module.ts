@@ -27,6 +27,9 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+import { SchedulerModule } from '@progress/kendo-angular-scheduler';
+import { DashboardService } from './dashboard.service';
+
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
@@ -68,9 +71,10 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatIconModule,
     MatListModule,
     MatRadioModule,
-    FormsModule
+    FormsModule,
+    SchedulerModule
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService,DashboardService],
 
   bootstrap: [AppComponent]
 })
