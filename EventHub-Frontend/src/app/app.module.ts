@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import{Routes, RouterModule} from '@angular/router'
 import {MatInputModule} from '@angular/material/input';
 import { EventsComponent } from './events/events.component';
-import { MyCustomHttpService } from './services/CustomService';
 import { EventService } from './services/event.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,10 +26,14 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { UsersServiceService } from './Services/users-service.service';
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
+{path:'events',component:EventsComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
 {path:'**',redirectTo:'Home'}];
@@ -58,7 +61,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
-
+    MatFormFieldModule,
     MatCardModule,
     MatSidenavModule,
     HttpClientModule,
@@ -68,9 +71,11 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatIconModule,
     MatListModule,
     MatRadioModule,
-    FormsModule
+    FormsModule,
+    MatSelectModule
+    
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard, EventService,UsersServiceService],
 
   bootstrap: [AppComponent]
 })
