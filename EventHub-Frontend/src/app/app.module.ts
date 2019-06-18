@@ -4,7 +4,6 @@ import { NgModule } from '@angular/core';
 import{Routes, RouterModule} from '@angular/router'
 import {MatInputModule} from '@angular/material/input';
 import { EventsComponent } from './events/events.component';
-import { MyCustomHttpService } from './services/CustomService';
 import { EventService } from './services/event.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
@@ -27,6 +26,11 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+
+import {MatFormFieldModule} from '@angular/material/form-field';
+import {MatSelectModule} from '@angular/material/select';
+import { UsersServiceService } from './Services/users-service.service';
+import { UpdateEventComponent } from './events/update-event/update-event.component';
 import { SchedulerModule } from '@progress/kendo-angular-scheduler';
 import { DashboardService } from './dashboard.service';
 
@@ -34,6 +38,8 @@ import { DashboardService } from './dashboard.service';
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
+{path:'events',component:EventsComponent,canActivate:[AuthGuard]},
+{path:'events/update',component:UpdateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
 {path:'**',redirectTo:'Home'}];
@@ -42,17 +48,14 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
     HomeComponent,
-
     MainNavComponent,
-
     UsersComponent,
     EventsComponent,
     UpdateUserComponent,
-    FirstLetterUppercasePipe
-
+    FirstLetterUppercasePipe,
+    UpdateEventComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +64,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     BrowserAnimationsModule,
     MatInputModule,
     MatButtonModule,
-
+    MatFormFieldModule,
     MatCardModule,
     MatSidenavModule,
     HttpClientModule,
@@ -72,9 +75,11 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatListModule,
     MatRadioModule,
     FormsModule,
+    MatSelectModule,
     SchedulerModule
+
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard,MyCustomHttpService, EventService,DashboardService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService],
 
   bootstrap: [AppComponent]
 })

@@ -6,6 +6,8 @@
     <mat-toolbar >Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/home">Home</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/events">Events</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/events/update">Update Event</a>
       <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()"  routerLink="/login" (click)="authService.logout()">Logout</a>
       <a mat-list-item *ngIf="!authService.isLoggedIn()" routerLink="/users">Register</a>
