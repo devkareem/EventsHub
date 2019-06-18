@@ -26,10 +26,14 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { UsersServiceService } from './Services/users-service.service';
 import { UpdateEventComponent } from './events/update-event/update-event.component';
+import { SchedulerModule } from '@progress/kendo-angular-scheduler';
+import { DashboardService } from './dashboard.service';
+
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
@@ -44,18 +48,14 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
     HomeComponent,
-
     MainNavComponent,
-
     UsersComponent,
     EventsComponent,
     UpdateUserComponent,
     FirstLetterUppercasePipe,
     UpdateEventComponent
-
   ],
   imports: [
     BrowserModule,
@@ -75,10 +75,11 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatListModule,
     MatRadioModule,
     FormsModule,
-    MatSelectModule
-    
+    MatSelectModule,
+    SchedulerModule
+
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService],
 
   bootstrap: [AppComponent]
 })
