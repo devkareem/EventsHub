@@ -25,9 +25,14 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { MatToolbarModule, MatIconModule, MatListModule } from '@angular/material';
 import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
+import { UpdateUserComponent } from './users/update-user/update-user.component';
+import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
+{path:'users',component:UsersComponent},
+{path:'users/edit',component:UpdateUserComponent},
 {path:'**',redirectTo:'Home'}];
 
 
@@ -38,10 +43,12 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     LoginComponent,
     HomeComponent,
 
-    MainNavComponent
+    MainNavComponent,
 
     UsersComponent,
-    EventsComponent
+    EventsComponent,
+    UpdateUserComponent,
+    FirstLetterUppercasePipe
 
   ],
   imports: [
