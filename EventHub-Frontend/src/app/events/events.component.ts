@@ -26,4 +26,6 @@ export class EventsComponent  {
      onSubmit() {
       this.eventService.createEvent(this.myForm.value);
     }
+
+   
 }
