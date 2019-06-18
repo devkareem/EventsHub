@@ -1,25 +1,43 @@
 import { Injectable } from '@angular/core';
-import { EventClass } from '../model/model.events';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
-  formData:EventClass;
-
-  apiUrl="http://localhost:8080/events";
+  public events;
+  public myHeaders: any;
   
 
   constructor(private http:HttpClient) { 
 }
-getEvents(): Observable<EventClass[]> {
-  return this.http.get<EventClass[]>(this.apiUrl);
+
+createEvent(eventsData) {
+  this.events = eventsData;
+  this.http.post('http://localhost:8080/api/events', eventsData).subscribe((res) => {
+    //console.log(res);
+  });
+}
+getCurrentEvent(eventId:string) {
+  console.log(eventId);
+  return this.http.get('http://localhost:8080/api/events/' + eventId);
 }
 
-createEvent(event: EventClass): Observable<any> {
-  return this.http.post(this.apiUrl, event);
+getAllEvents() {
+  return this.http.get('http://localhost:8080/api/events');
+}
+getAllUsers() {
+  return this.http.get('http://localhost:8080/api/events/users');
+}
+
+UpdateEvent(eventId:string,eventsData) {
+  this.http.put('http://localhost:8080/api/events/' + eventId,eventsData).subscribe((res) => {
+    //console.log(res);
+  });
+}
+
+DeleteEvent(eventId:string) {
+  return this.http.delete('http://localhost:8080/events/' + eventId);
 }
 
 }

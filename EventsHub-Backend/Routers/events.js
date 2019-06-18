@@ -1,17 +1,24 @@
 const router = require('express').Router();
 const mongo= require('mongodb');
+let dbCol;
+router.all('*',(req,res,next) => {
+    dbCol = req.db.events;
+    return next();
+});
 
 // Retrive all events from database
+
+router.get('/users', async (req,res) => {
+    let result = await req.db.users.find({}).select('_id name email');
+    res.status(200).json({status: 'OK', data : result});
+});
 router.get('/', async (req, res,next)=>{
     try{
-await req.db.collection("Events").find({'owner':{'_id':req.user._id}}).toArray(
-    (err,data)=>{
-        res.json(data);
-        next(err);
-    });
+        let result = await dbCol.find({});
+        res.status(200).json({status: 'OK', data : result});
 }
 catch(err){
-    return next(new Error(e.message));
+    return next(new Error(err.message));
 }
     
 
@@ -22,7 +29,7 @@ router.get('/:eventId', async (req,res,next)=>{
     req.user
     try{
         const id= new mongo.ObjectID(req.params.eventId);
-    const result= await req.db.collection("Events").findOne({_id:id});
+    const result= await dbCol.findById({_id:id});
     res.json(result);
     }
     catch(e){
@@ -30,18 +37,12 @@ router.get('/:eventId', async (req,res,next)=>{
     }
 
 });
-router.get('/:userId', async (req,res,next)=>{
-
-})
-
 // Create event
 router.post('/', async (req,res,next)=>{
     try{
-        const body=req.body;
-        body.owner=req.user;
-    await req.db.collection("Events").insertOne(body, 
-        (err, results) => {res.json(results);
-        next(err);})
+    
+   const result= await dbCol.create(req.body);
+   res.json(result);
     }
     catch(e){
        return next(new Error(e.message));
@@ -52,8 +53,10 @@ router.post('/', async (req,res,next)=>{
 // Update event with given id in the database
 router.put('/:eventId', async (req, res, next)=>{
     try{
+        const body=req.body;
     const id= new mongo.ObjectID(req.params.eventId);
-    const data=await req.db.collection("Events").updateOne({_id:id});
+    const data=await dbCol.where({_id:id}).update({$set:{'title':body.title,'description':body.description,
+    'startTime':body.startTime,'endTime':body.endTime,'owner':body.owner}});
     res.json(data);
     }
     catch(e){
@@ -65,7 +68,7 @@ router.put('/:eventId', async (req, res, next)=>{
 router.delete('/:eventId', async (req,res,next)=>{
     try{
         const id= new mongo.ObjectID(req.params.eventId);
-    const data=await req.db.collection("Events").remove({_id:id});
+    const data=await dbCol.findOneAndDelete({_id:id});
     res.json(data);
     }
     catch(e){
