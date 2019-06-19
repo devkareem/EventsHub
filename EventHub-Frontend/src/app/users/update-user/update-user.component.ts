@@ -39,6 +39,7 @@ export class UpdateUserComponent implements OnInit {
     });
 
     this.userId = this.au.currentUser ? this.au.currentUser._id : null;
+    console.log(this.au.currentUser);
     if (this.userId) {
       this.us.getCurrentUserData(this.userId).subscribe((res: any) => {
         //console.log(res);
