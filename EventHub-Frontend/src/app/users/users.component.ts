@@ -58,12 +58,10 @@ export class UsersComponent implements OnInit {
 
   onSubmit() {
     this.userForm.value.password = this.userForm.value.passwordGroup.password;
-    console.log(this.userForm.value);
-
-    this.us.registerNewUser(this.userForm.value).subscribe((res) => {
+    this.us.registerNewUser(this.userForm.value).subscribe((res:any) => {
       this.toastr.success("User Created", "Users");
-      this.rt.navigateByUrl('/Home')
-      //console.log(res);
+      localStorage.token = res.token;
+      window.location.href=window.location.origin+'/Home';
     });
 
   }
