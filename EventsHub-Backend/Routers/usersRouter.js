@@ -33,8 +33,9 @@ userRoute.delete('/:userId',async (req,res) =>{
 });
 
 userRoute.put('/writecomment/:eventId',async (req,res) => {
+    console.log(req);
     let result = await req.db.events.findOneAndUpdate({_id : new mongo.ObjectID(req.params.eventId)},
-    {$push : { comments : req.body} }, {useFindAndModify : false} );
+    {$push : { comments : req.body} } );
     res.status(201).json({status: 'OK',data : result});
 });
 

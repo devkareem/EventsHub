@@ -15,8 +15,8 @@ mat-grid-tile {
     /* max-width: 400px; */
     background-color: lightskyblue;
     /* color: cornsilk; */
-    margin: 5px , 5px;
-    padding: 10px
+    /* margin: 5px , 5px; */
+    /* padding: 10px */
   }
   
   .example-header-image {
@@ -27,4 +27,13 @@ mat-grid-tile {
   .example-comment-image {
     background-image: url('https://images.onlinelabels.com/images/clip-art/acspike/acspike_male_user_icon.png');
     background-size: cover;
+  }
+
+  mat-grid-tile-header {
+    background-color: red;
+  }
+
+  .contentDiv{
+    display: block;
+overflow: auto;
   }

@@ -19,7 +19,6 @@ createEvent(eventsData) {
   });
 }
 getCurrentEvent(eventId:string) {
-  console.log(eventId);
   return this.http.get('http://localhost:8080/api/events/' + eventId);
 }
 

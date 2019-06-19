@@ -30,7 +30,8 @@ import { UserEventComponent } from './user-event/user-event.component';
 import {MatGridListModule} from '@angular/material/grid-list';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import { UsersServiceService } from './Services/users-service.service';
+import { UsersServiceService } from './services/users-service.service';
+import { PhoneFormatPipe } from './users/phone-format.pipe';
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
@@ -55,7 +56,8 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     EventsComponent,
     UpdateUserComponent,
     FirstLetterUppercasePipe,
-    UserEventComponent
+    UserEventComponent,
+    PhoneFormatPipe
 
   ],
   imports: [
@@ -76,8 +78,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatListModule,
     MatRadioModule,
     FormsModule,
-    MatSelectModule
-    
+    MatSelectModule,
     MatGridListModule
   ],
   providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard, EventService,UsersServiceService],

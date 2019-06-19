@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl, Validators, NgForm } from '@angular/forms';
-import { UsersServiceService } from '../Services/users-service.service';
+import { UsersServiceService } from '../services/users-service.service';
 import { EventService } from '../services/event.service';
 @Component({
   selector: 'app-events',

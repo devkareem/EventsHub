@@ -1,56 +1,61 @@
 <form [formGroup]="userEventsForm" (ngSubmit)="onSubmit()">
-<!-- <mat-grid-list cols="4" rowHeight="100px">
-  <mat-grid-tile
-      *ngFor="let tile of tiles"
-      [colspan]="tile.cols"
-      [rowspan]="tile.rows"
-      [style.background]="tile.color">
-    {{tile.text}}
-  </mat-grid-tile>
-</mat-grid-list> -->
+  <div class="contentDiv">
+    <mat-card class="example-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-header-image"></div>
+        <mat-card-title>{{eventData.title}}</mat-card-title>
+        <mat-card-subtitle>
+          <p>Created by: {{eventData.owner.name}} - {{eventData.owner.email}}</p>
+          <p>Start date: {{eventData.startTime | date :'medium'}}</p>
+          <p>End date : {{eventData.endTime | date :'medium' }}</p>
+        </mat-card-subtitle>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{eventData.description}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+        <!-- <button mat-button (click)="updateStatus('Going')">Going</button>
+        <button mat-button (click)="deleteAccount('Maybe')">Maybe</button>
+        <button mat-button (click)="deleteAccount('Not Going')">Not Going</button> -->
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
-<mat-grid-list cols="1">
-  <mat-grid-tile-header>
-      <mat-card class="example-card">
-          <mat-card-header>
-            <div mat-card-avatar class="example-header-image"></div>
-            <mat-card-title>{{title}}</mat-card-title>
-            <mat-card-subtitle>Created by: {{owner.name}} - {{owner.email}}</mat-card-subtitle>
-          </mat-card-header>
-          <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
-          <mat-card-content>
-            <p>
-              {{description}}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Going</button>
-            <button mat-button>Maybe</button>
-            <button mat-button>Not Going</button>
-          </mat-card-actions>
-        </mat-card>
-  </mat-grid-tile-header>
+  <div *ngFor="let cmnt of eventData.comments">
+    <mat-card class="comments-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-comment-image"></div>
+        <mat-card-title>{{cmnt.comment}}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <p>
+          {{cmnt.name}}
+        </p>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+  </div>
 
-  <mat-grid-tile *ngFor="let cmnt of comments">
-      <mat-card class="example-card">
-          <mat-card-header>
-            <div mat-card-avatar class="example-comment-image"></div>
-            <mat-card-title>{{cmnt.name}}</mat-card-title>
-            <!-- <mat-card-subtitle>Created by: {{owner.name}} - {{owner.email}}</mat-card-subtitle> -->
-          </mat-card-header>
-          <mat-card-content>
-            <p>
-              {{cmnt.comment}}
-            </p>
-          </mat-card-content>
-          <mat-card-actions>
-          </mat-card-actions>
-        </mat-card>
-  </mat-grid-tile>
-  <mat-grid-tile>4
-    <mat-form-field class="example-full-width">
-    <textarea matInput placeholder="Leave a comment" id="eventComment" formControlName="comment"> </textarea>
-  </mat-form-field>
-</mat-grid-tile>
-</mat-grid-list>
+  <div>
+    <mat-card class="comment-card">
+      <mat-card-header>
+        <div mat-card-avatar class="example-comment-image"></div>
+        <mat-card-title>
+
+        </mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-form-field class="example-full-width">
+          <textarea matInput placeholder="Leave a comment" id="eventComment" formControlName="comment"> </textarea>
+        </mat-form-field>
+      </mat-card-content>
+      <mat-card-actions>
+      </mat-card-actions>
+    </mat-card>
+    <button type="submit" mat-raised-button [disabled]="!userEventsForm.valid">Comment</button>
+  </div>
+
 </form>
