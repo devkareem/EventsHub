@@ -8,7 +8,6 @@ import { shareReplay } from 'rxjs/operators';
 })
 export class UsersServiceService {
 
-  public users;
   public myHeaders: any
 
   constructor(public http: HttpClient) { 
@@ -17,14 +16,11 @@ export class UsersServiceService {
   }
 
   registerNewUser(usersData) {
-    this.users = usersData;
-    this.http.post('http://localhost:8080/register', usersData).subscribe((res) => {
-      //console.log(res);
-    });
+    return this.http.post('http://localhost:8080/register', usersData);
   }
 
   getCurrentUserData(userId:string) {
-    console.log(userId);
+    //console.log(userId);
     return this.http.get('http://localhost:8080/users/' + userId);
   }
 
@@ -33,12 +29,15 @@ export class UsersServiceService {
   }
 
   UpdateUser(userId:string,usersData) {
-    this.http.put('http://localhost:8080/users/' + userId,usersData).subscribe((res) => {
-      //console.log(res);
-    });
+    return this.http.put('http://localhost:8080/users/' + userId,usersData);
   }
 
   DeleteUser(userId:string) {
     return this.http.delete('http://localhost:8080/users/' + userId);
+  }
+
+  writeCommentOnEvent(eventId : string, commentData: any)
+  {
+    return this.http.put('http://localhost:8080/users/writecomment/' + eventId,commentData);
   }
 }

@@ -6,9 +6,10 @@ import {
   FormBuilder,
   FormArray
 } from "@angular/forms";
-import { UsersServiceService } from '../../Services/users-service.service'
+import { UsersServiceService } from '../../services/users-service.service'
 import { AuthService } from '../../auth.service';
 import { Router } from '@angular/router'
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-update-user',
@@ -17,21 +18,17 @@ import { Router } from '@angular/router'
 })
 export class UpdateUserComponent implements OnInit {
 
-  userId : string
+  userId: string
   userForm: FormGroup;
   genders: String[] = [
     'male',
     'female'
   ];
 
-  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService, public rt : Router) {
+  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService, public rt: Router, private toastr: ToastrService) {
     this.userForm = this.formBuilder.group({
-      'email': ['', [
-        Validators.required,
-        Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
-      ]],
       'name': ['', Validators.required],
-      'phone': [''],
+      'phone': ['',[Validators.maxLength(10),Validators.minLength(10)]],
       'gender': [''],
       'address': this.formBuilder.group({
         'state': ['', []],
@@ -44,9 +41,9 @@ export class UpdateUserComponent implements OnInit {
     this.userId = this.au.currentUser ? this.au.currentUser._id : null;
     if (this.userId) {
       this.us.getCurrentUserData(this.userId).subscribe((res: any) => {
-        console.log(res);
+        //console.log(res);
         if (res.status === 'OK') {
-          console.log(res);
+          // console.log(res);
           this.userForm.patchValue(res.data);
         }
       });
@@ -54,27 +51,37 @@ export class UpdateUserComponent implements OnInit {
   }
 
   ngOnInit() {
-    
+
   }
 
   onSubmit() {
-    //this.userForm.value.password = this.userForm.value.passwordGroup.password;
-    console.log(this.userForm.value);
-    this.us.UpdateUser(this.userId,this.userForm.value);
+    let cfrm = confirm(`Are you sure you want to edit you account?`);
+    if (cfrm) {
+      // console.log(this.userForm.value);
+      this.us.UpdateUser(this.userId, this.userForm.value).subscribe((res) => {
+        this.toastr.success("User Data Updated", "Users");
+      });
+    }
   }
 
   deleteAccount() {
-    // (
-    //   <FormArray>this.myForm.controls['hobbies']).push(new FormControl('', Validators.required, this.asyncExampleValidator)
-    // );
-    this.us.DeleteUser(this.userId).subscribe((res) => {
-      this.au.logout();
-      this.rt.navigateByUrl('/Home')
-      //console.log(res);
-    });
-
-    
-
+    let cfrm = confirm(`Are you sure you want to delete you account?
+    All you data will be gone`);
+    if (cfrm) {
+      this.us.DeleteUser(this.userId).subscribe((res) => {
+        this.toastr.success("User Deleted", "Users");
+        this.au.logout();
+        this.rt.navigateByUrl('/Home')
+      });
+    }
   }
+
+  // validateNumber(value){
+  //   console.log(!isNaN(value.key));
+  //   if(!isNaN(value.key)){
+  //     this.userForm.get('phone'). = true;
+  //     //.setValue(this.userForm.get('phone').value.remove(value.key));
+  //   }
+  // }
 
 }

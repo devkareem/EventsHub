@@ -8,6 +8,7 @@
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/home">Home</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/events">Events</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/edit">Update Profile</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/invitedevents">Invited Events</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

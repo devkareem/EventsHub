@@ -1,0 +1,39 @@
+mat-grid-tile {
+    background: lightblue;
+  }
+.example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+.example-full-width {
+    width: 100%;
+  }
+
+.example-card {
+    /* max-width: 400px; */
+    background-color: lightskyblue;
+    /* color: cornsilk; */
+    /* margin: 5px , 5px; */
+    /* padding: 10px */
+  }
+  
+  .example-header-image {
+    background-image: url('https://cdn2.iconfinder.com/data/icons/circle-icons-1/64/calendar-512.png');
+    background-size: cover;
+  }
+
+  .example-comment-image {
+    background-image: url('https://images.onlinelabels.com/images/clip-art/acspike/acspike_male_user_icon.png');
+    background-size: cover;
+  }
+
+  mat-grid-tile-header {
+    background-color: red;
+  }
+
+  .contentDiv{
+    display: block;
+overflow: auto;
+  }

@@ -27,6 +27,10 @@ import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
 
+import { UserEventComponent } from './user-event/user-event.component';
+import {MatGridListModule} from '@angular/material/grid-list';
+import { PhoneFormatPipe } from './users/phone-format.pipe';
+
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
 import { UsersServiceService } from './Services/users-service.service';
@@ -46,6 +50,7 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'events/create',component:CreateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
+{path:'users/invitedevents',component:UserEventComponent},
 {path:'**',redirectTo:'Home'}];
 
 
@@ -59,8 +64,13 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     EventsComponent,
     UpdateUserComponent,
     FirstLetterUppercasePipe,
+
+    UserEventComponent,
+    PhoneFormatPipe,
+
     UpdateEventComponent,
     CreateEventComponent
+
   ],
   imports: [
     BrowserModule,
@@ -81,8 +91,12 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatRadioModule,
     FormsModule,
     MatSelectModule,
+
+    MatGridListModule,
+
     SchedulerModule,
     MatTableModule
+
 
   ],
   providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService,DatePipe],

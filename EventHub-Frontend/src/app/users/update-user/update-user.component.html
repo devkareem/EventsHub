@@ -1,25 +1,20 @@
 <form [formGroup]="userForm" (ngSubmit)="onSubmit()">
-
-  <h2>Update Profile</h2>
-  <mat-form-field class="example-full-width">
-    <!-- <label for="email">E-Mail</label> -->
-    <input matInput placeholder="Enter your E-mail" id="email" formControlName="email">
-    <!-- <div *ngIf="!userForm.get('email').valid">
-      Invalid Email
-    </div> -->
-  </mat-form-field>
-
+  <h2>User Data</h2>
   <mat-form-field class="example-full-width">
     <input type="text" matInput placeholder="Your Name" id="name" formControlName="name">
   </mat-form-field>
   <mat-form-field class="example-full-width">
-    <input type="text" matInput placeholder="Phone Number" id="phone" formControlName="phone">
+    <input type="text" matInput placeholder="Phone Number" id="phone" formControlName="phone" [value]="userForm.get('phone').value | phoneFormat">
+    <mat-error *ngIf="!userForm.get('phone').valid">
+        phone number must be 10 numbers
+    </mat-error>
   </mat-form-field>
 
-  <mat-radio-group formControlName="gender" aria-label="Select an option" >
-      <mat-radio-button  *ngFor="let g of genders" [value]="g">{{g | CapitalizeFL}}</mat-radio-button>
+  <mat-radio-group formControlName="gender" aria-label="Select an option">
+    <mat-radio-button *ngFor="let g of genders" [value]="g">{{g | CapitalizeFL}} </mat-radio-button>
   </mat-radio-group>
 
+  <h2>Address</h2>
   <div formGroupName="address">
     <mat-form-field class="example-full-width">
       <input type="text" matInput placeholder="State" id="state" formControlName="state">
@@ -37,6 +32,7 @@
       <input type="text" matInput placeholder="Zipcode" id="zipCode" formControlName="zipCode">
     </mat-form-field>
   </div>
-  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Register</button>
+
+  <button type="submit" mat-raised-button color="primary" [disabled]="!userForm.valid">Update</button>
   <button type="button" mat-raised-button color="warn" (click)="deleteAccount()">Delete Account</button>
 </form>

@@ -7,8 +7,11 @@ import {
   FormArray
 } from "@angular/forms";
 
-import { UsersServiceService } from '../Services/users-service.service'
+import { UsersServiceService } from '../services/users-service.service'
 import { AuthService } from '../auth.service';
+import { ToastrService } from 'ngx-toastr';
+import { PasswordMatcher } from './matcher'
+import { Router } from '@angular/router'
 
 @Component({
   selector: 'app-users',
@@ -23,25 +26,24 @@ export class UsersComponent implements OnInit {
   ];
 
   public userData;
-  public isUpdate = false;
+  public matcher = new PasswordMatcher();
 
-  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService) {
-
+  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService, public rt: Router,private toastr: ToastrService) {
     this.userForm = this.formBuilder.group({
       'email': ['', [
         Validators.required,
-        Validators.pattern("[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?")
+        Validators.pattern("[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$")
       ]],
       'passwordGroup': this.formBuilder.group({
         'password': ['', [
-          Validators.required//,
-          //Validators.pattern('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&].{8,}')
+          Validators.required,
+          Validators.pattern('(?=.*[a-z])(?=.*[0-9])[A-Za-z\d$@$!%*?&].{6,}')
         ]],
         'confirmPassword': ['', [Validators.required]]
-        //}, { validator: this.confirmPasswordValidator }),
-      }),
+      }, {validator: this.confirmPasswordValidator }
+      ),
       'name': ['', Validators.required],
-      'phone': [''],
+      'phone': ['',[Validators.maxLength(10),Validators.minLength(10)]],
       'gender': [''],
       'address': this.formBuilder.group({
         'state': ['', []],
@@ -51,12 +53,19 @@ export class UsersComponent implements OnInit {
       })
     });
 
-    
+
   }
 
   onSubmit() {
     this.userForm.value.password = this.userForm.value.passwordGroup.password;
-    this.us.registerNewUser(this.userForm.value);
+    console.log(this.userForm.value);
+
+    this.us.registerNewUser(this.userForm.value).subscribe((res) => {
+      this.toastr.success("User Created", "Users");
+      this.rt.navigateByUrl('/Home')
+      //console.log(res);
+    });
+
   }
 
   ngOnInit() {
@@ -69,5 +78,4 @@ export class UsersComponent implements OnInit {
 
     return pass === confirmPass ? null : { notSame: true }
   }
-
 }
