@@ -1,112 +1,44 @@
+<h2>Events List</h2>
 
+<a mat-raised-button color="primary" routerLink="/events/create">Create New Event</a>
 
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
+  <!--- Note that these columns can be defined in any order.
+        The actual rendered columns are set as a property on the row definition" -->
 
-<fieldset class="col-sm-8 scheduler-border">
-<legend class="scheduler-border"><strong>Create an Event  </strong></legend>
+  <!-- title Column -->
+  <ng-container matColumnDef="title">
+    <th mat-header-cell *matHeaderCellDef> Title </th>
+    <td mat-cell *matCellDef="let element"> {{element.title}} </td>
+  </ng-container>
 
-<form [formGroup]="myForm" (ngSubmit)="onSubmit()">
-  <!-- Title -->
-  <div>
-  <mat-form-field class="title">
-        
-        <input matInput    type="text" placeholder="Enter Title" id="title" formControlName="title">
-      </mat-form-field>
+  <!-- description Column -->
+  <ng-container matColumnDef="description">
+    <th mat-header-cell *matHeaderCellDef> Description </th>
+    <td mat-cell *matCellDef="let element"> {{element.description}} </td>
+  </ng-container>
 
-    </div> 
-    <!-- Description -->
-  <div>
-      <mat-form-field class="description">
-            
-            <input matInput  type="text" placeholder="Enter Description" id="description" formControlName="description">
-          </mat-form-field>
-    
-        </div>  
-        <!-- Start Time -->
-  <div>
-      <mat-form-field class="title">
-            
-            <input matInput  type="datetime-local"  placeholder="Enter Start Time" id="startTime" formControlName="startTime">
-          </mat-form-field>
-    
-        </div> 
+  <!-- startTime Column -->
+  <ng-container matColumnDef="startTime">
+    <th mat-header-cell *matHeaderCellDef> Start Time </th>
+    <td mat-cell *matCellDef="let element"> {{element.startTime}} </td>
+  </ng-container>
 
-
-        <!-- End Time -->
-  <div>
-      <mat-form-field class="title">
-            
-            <input matInput  type="datetime-local"  placeholder="Enter End Time" id="startTime" formControlName="endTime">
-          </mat-form-field>
-    
-        </div> 
-
-
-
-   <!-- <div class="form-group"><label for="">Title</label>
-      <input formControlName="title"  class="form-control"
-       type="text"  />
-       
-      </div>
-  
-    
-  
-  <div class="form-group"><label for="">Description</label>
-    <input formControlName="description"  class="form-control"
-     type="text" />
-     
-    </div>
-
-
-    <div class="form-group"><label for="">Start Time</label><input formControlName="startTime"  class="form-control" 
-      type="datetime-local" />
-          </div>
-  
-        <div class="form-group"><label for="">End Time</label><input formControlName="endTime"  class="form-control" 
-    type="datetime-local" />
-      </div>   -->
-
-<div>
-     <mat-form-field>
-        <mat-label>Select User</mat-label>
-        <mat-select formControlName="owner">
-          <mat-option *ngFor="let user of (users | async)?.data" [value]="user">
-            {{user.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-</div>
-
-  
-  <!--  <div class="form-group"><label for="">Select User</label>
-  <select name="user" id="user" formControlName="users" class="form-control"
-  >
-    <option *ngFor="let user of users" [value]="user.id">
-      {{user.name}}
-    </option>
-  </select>
-  </div>
-  <div class="form-group">
-    <label for="">Add or Remove Invitations</label>
-  <input type="text" class="form-control" (keyup.enter)="inviteUser(val)" #val/>
-  <ul class="list-group">
-    <li 
-    *ngFor="let user of myForm.get('invitedUsers').controls"
-    (click)="removeInvitation(user)"
-    class="list-group-item"
-    >{{user.value}}</li>
-  </ul>
-</div>    -->
-<div>
-<mat-form-field>
-    <mat-label>Add Invitees</mat-label>
-    <mat-select formControlName="invaitedUsers" multiple>
-      <mat-option *ngFor="let user of (users | async)?.data" [value]="user">{{user.name}}</mat-option>
-    </mat-select>
-  </mat-form-field>
-</div>
-<button type="submit" mat-raised-button color="blue" [disabled]="!myForm.valid" >Save</button>
-<button type="reset" mat-raised-button color="warn" >Cancel</button>
-
-</form>
-</fieldset>
+  <!-- endTime Column -->
+  <ng-container matColumnDef="endTime">
+    <th mat-header-cell *matHeaderCellDef> End Time </th>
+    <td mat-cell *matCellDef="let element"> {{element.endTime}}   </td>
+  </ng-container>
+  <ng-container matColumnDef="update">
+    <th mat-header-cell *matHeaderCellDef > Update </th>
+    <td mat-cell *matCellDef="let element"> <a mat-raised-button color="accent" [routerLink]="['update',element.id]">Update</a> </td>
+  </ng-container>
+  <ng-container matColumnDef="delete">
+    <th mat-header-cell *matHeaderCellDef > Delete </th>
+    <td mat-cell *matCellDef="let element">   <button  mat-raised-button color="warn" (click)="deleteEvent(element)">Delete</button>
+    </td>
+  </ng-container>
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+</table>

@@ -7,7 +7,7 @@ import { EventsComponent } from './events/events.component';
 import { EventService } from './services/event.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule,ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -33,13 +33,17 @@ import { UsersServiceService } from './Services/users-service.service';
 import { UpdateEventComponent } from './events/update-event/update-event.component';
 import { SchedulerModule } from '@progress/kendo-angular-scheduler';
 import { DashboardService } from './dashboard.service';
+import { CreateEventComponent } from './events/create-event/create-event.component';
+import {MatTableModule} from '@angular/material/table';
+import { DatePipe } from '@angular/common';
 
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
 {path:'events',component:EventsComponent,canActivate:[AuthGuard]},
-{path:'events/update',component:UpdateEventComponent,canActivate:[AuthGuard]},
+{path:'events/update/:id',component:UpdateEventComponent,canActivate:[AuthGuard]},
+{path:'events/create',component:CreateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
 {path:'**',redirectTo:'Home'}];
@@ -55,7 +59,8 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     EventsComponent,
     UpdateUserComponent,
     FirstLetterUppercasePipe,
-    UpdateEventComponent
+    UpdateEventComponent,
+    CreateEventComponent
   ],
   imports: [
     BrowserModule,
@@ -76,10 +81,11 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatRadioModule,
     FormsModule,
     MatSelectModule,
-    SchedulerModule
+    SchedulerModule,
+    MatTableModule
 
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService,DatePipe],
 
   bootstrap: [AppComponent]
 })
