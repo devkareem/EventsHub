@@ -7,37 +7,33 @@ import { HttpClient } from '@angular/common/http';
 export class EventService {
   public events;
   public myHeaders: any;
-  
 
-  constructor(private http:HttpClient) { 
-}
 
-createEvent(eventsData) {
-  this.events = eventsData;
-  this.http.post('http://localhost:8080/api/events', eventsData).subscribe((res) => {
-    //console.log(res);
-  });
-}
-getCurrentEvent(eventId:string) {
-  console.log(eventId);
-  return this.http.get('http://localhost:8080/api/events/' + eventId);
-}
+  constructor(private http: HttpClient) {
+  }
 
-getAllEvents() {
-  return this.http.get('http://localhost:8080/api/events');
-}
-getAllUsers() {
-  return this.http.get('http://localhost:8080/api/events/users');
-}
+  createEvent(eventsData) {
+    this.events = eventsData;
+    return this.http.post('http://localhost:8080/api/events', eventsData);
+  }
+  getCurrentEvent(eventId: string) {
+    console.log(eventId);
+    return this.http.get('http://localhost:8080/api/events/' + eventId);
+  }
 
-UpdateEvent(eventId:string,eventsData) {
-  this.http.put('http://localhost:8080/api/events/' + eventId,eventsData).subscribe((res) => {
-    //console.log(res);
-  });
-}
+  getAllEvents() {
+    return this.http.get('http://localhost:8080/api/events');
+  }
+  getAllUsers() {
+    return this.http.get('http://localhost:8080/api/events/users');
+  }
 
-DeleteEvent(eventId:string) {
-  return this.http.delete('http://localhost:8080/events/' + eventId);
-}
+  UpdateEvent(eventId: string, eventsData) {
+    return this.http.put('http://localhost:8080/api/events/' + eventId, eventsData);
+  }
+
+  DeleteEvent(eventId: string) {
+    return this.http.delete('http://localhost:8080/api/events/' + eventId);
+  }
 
 }

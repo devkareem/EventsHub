@@ -41,29 +41,18 @@
       
           </div> 
 
-  <div>
-       <mat-form-field>
-          <mat-label>Select User</mat-label>
-          <mat-select formControlName="owner">
-            <mat-option *ngFor="let user of (users | async)?.data" [value]="user">
-              {{user.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-  </div>
   
     
     
   <div>
   <mat-form-field>
       <mat-label>Add Invitees</mat-label>
-      <mat-select formControlName="invaitedUsers" multiple>
+      <mat-select  formControlName="invaitedUsers" multiple>
         <mat-option *ngFor="let user of (users | async)?.data" [value]="user">{{user.name}}</mat-option>
       </mat-select>
     </mat-form-field>
   </div>
   <button type="submit" mat-raised-button color="blue" [disabled]="!eventForm.valid" >Save</button>
-  <button type="reset" mat-raised-button color="warn" >Cancel</button>
-  
+  <a mat-raised-button color="warn" [routerLink]="['/events']">Cancel</a>
   </form>
   </fieldset>

@@ -44,7 +44,6 @@ export class HomeComponent implements OnInit {
           ownerID: dataItem.owner._id
         }
       ));
-      console.log(this.events);
     });
   }
 
