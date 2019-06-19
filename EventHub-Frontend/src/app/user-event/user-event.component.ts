@@ -9,6 +9,7 @@ import {
 import { UsersServiceService } from '../services/users-service.service'
 import { EventService } from '../services/event.service'
 import { AuthService } from '../auth.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-event',
@@ -22,8 +23,8 @@ export class UserEventComponent implements OnInit {
   public userEventsForm: FormGroup;
   public eventData;
   public commentData;
-
-  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService, public ev: EventService) {
+  public paramsub;
+  constructor(public formBuilder: FormBuilder, public us: UsersServiceService, private au: AuthService, public ev: EventService, public rou: ActivatedRoute) {
 
     this.userEventsForm = this.formBuilder.group({
       'comment': ['', Validators.required]
@@ -35,12 +36,16 @@ export class UserEventComponent implements OnInit {
 
     this.userId = this.au.currentUser ? this.au.currentUser._id : null;
     if (this.userId) {
-      this.eventId = '5d0850b69f71b708d6f87b7f'
-      this.loadEventData();
+      this.paramsub = this.rou.params.subscribe(params => {
+        this.eventId = params['id'];
+        if (this.eventId) {
+          this.loadEventData();
+        }
+      });
     }
   }
 
-  loadEventData(){
+  loadEventData() {
     this.ev.getCurrentEvent(this.eventId).subscribe((res: any) => {
       console.log(res);
       this.eventData = res;
@@ -54,7 +59,7 @@ export class UserEventComponent implements OnInit {
     this.commentData.name = this.au.currentUser.name;
 
     console.log(this.commentData);
-    this.us.writeCommentOnEvent(this.eventId,this.commentData).subscribe((res) => {
+    this.us.writeCommentOnEvent(this.eventId, this.commentData).subscribe((res) => {
       console.log(res);
       this.userEventsForm.controls['comment'].setValue('');
       this.loadEventData();

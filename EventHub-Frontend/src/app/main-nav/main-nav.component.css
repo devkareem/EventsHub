@@ -23,3 +23,12 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+
+.layoutContent{
+  margin: 10px;
+}
+.smalltext{
+  font-size: 15px;
+  margin-right: 5px;
+  color: yellow;
+}

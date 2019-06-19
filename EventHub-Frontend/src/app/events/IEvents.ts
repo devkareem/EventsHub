@@ -4,5 +4,5 @@ export interface IEventElement {
   description: string;
   startTime: string;
   endTime: string;
-
+  ownerId?: string;
 }

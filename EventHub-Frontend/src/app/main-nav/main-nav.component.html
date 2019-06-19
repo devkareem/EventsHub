@@ -1,39 +1,38 @@
 <mat-sidenav-container class="sidenav-container">
   <mat-sidenav *ngIf="authService.isLoggedIn()" #drawer class="sidenav" fixedInViewport
-      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-      [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
-    <mat-toolbar >Menu</mat-toolbar>
+    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'" [mode]="(isHandset$ | async) ? 'over' : 'side'"
+    [opened]="(isHandset$ | async) === false">
+    <mat-toolbar>Menu</mat-toolbar>
     <mat-nav-list>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/home">Home</a>
-      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/events">Events</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/events">Created Events</a>
       <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/edit">Update Profile</a>
-      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/invitedevents">Invited Events</a>
+      <a mat-list-item *ngIf="authService.isLoggedIn()" routerLink="/users/invitedevents">My Events</a>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">
-      <button
-        type="button"
-        aria-label="Toggle sidenav"
-        mat-icon-button
-        (click)="drawer.toggle()"
+      <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
         *ngIf="isHandset$ | async">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
       </button>
       <mat-toolbar-row>
 
-      <span>Events Hub</span>
+        <span>Events Hub</span>
 
-      
+
         <span class="example-spacer"></span>
         <a mat-raised-button color="accent" *ngIf="!authService.isLoggedIn()" routerLink="/login">Login</a>
-        <a mat-raised-button color="warn" *ngIf="authService.isLoggedIn()"  routerLink="/login" (click)="authService.logout()">Logout</a>
+        <h3 class="smalltext" *ngIf="authService.isLoggedIn()">{{authService.currentUser.name}}</h3>
+        <a mat-raised-button color="warn" *ngIf="authService.isLoggedIn()" routerLink="/login"
+          (click)="authService.logout()">Logout</a>
         <a mat-raised-button color="primary" *ngIf="!authService.isLoggedIn()" routerLink="/users">Register</a>
       </mat-toolbar-row>
-    
+
     </mat-toolbar>
     <!-- Add Content Here -->
-    <ng-content></ng-content>
+    <div class="layoutContent">
+      <ng-content></ng-content>
+    </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
