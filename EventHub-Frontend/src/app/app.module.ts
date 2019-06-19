@@ -7,7 +7,7 @@ import { EventsComponent } from './events/events.component';
 import { EventService } from './services/event.service';
 import { AppComponent } from './app.component';
 import { LoginComponent } from './login/login.component';
-import { FormsModule,ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import { HomeComponent } from './home/home.component';
 import {MatButtonModule} from '@angular/material/button';
@@ -26,17 +26,28 @@ import { UsersComponent } from './users/users.component';
 import {MatRadioModule} from '@angular/material/radio';
 import { UpdateUserComponent } from './users/update-user/update-user.component';
 import { FirstLetterUppercasePipe } from './users/first-letter-uppercase.pipe';
+
 import { UserEventComponent } from './user-event/user-event.component';
 import {MatGridListModule} from '@angular/material/grid-list';
+import { PhoneFormatPipe } from './users/phone-format.pipe';
+
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import { UsersServiceService } from './services/users-service.service';
-import { PhoneFormatPipe } from './users/phone-format.pipe';
+import { UsersServiceService } from './Services/users-service.service';
+import { UpdateEventComponent } from './events/update-event/update-event.component';
+import { SchedulerModule } from '@progress/kendo-angular-scheduler';
+import { DashboardService } from './dashboard.service';
+import { CreateEventComponent } from './events/create-event/create-event.component';
+import {MatTableModule} from '@angular/material/table';
+import { DatePipe } from '@angular/common';
+
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'login',component:LoginComponent},
 {path:'Home',component:HomeComponent,canActivate:[AuthGuard]},
 {path:'events',component:EventsComponent,canActivate:[AuthGuard]},
+{path:'events/update/:id',component:UpdateEventComponent,canActivate:[AuthGuard]},
+{path:'events/create',component:CreateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
 {path:'users/edit',component:UpdateUserComponent},
 {path:'users/invitedevents',component:UserEventComponent},
@@ -46,18 +57,19 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 @NgModule({
   declarations: [
     AppComponent,
-
     LoginComponent,
     HomeComponent,
-
     MainNavComponent,
-
     UsersComponent,
     EventsComponent,
     UpdateUserComponent,
     FirstLetterUppercasePipe,
+
     UserEventComponent,
-    PhoneFormatPipe
+    PhoneFormatPipe,
+
+    UpdateEventComponent,
+    CreateEventComponent
 
   ],
   imports: [
@@ -79,9 +91,15 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     MatRadioModule,
     FormsModule,
     MatSelectModule,
-    MatGridListModule
+
+    MatGridListModule,
+
+    SchedulerModule,
+    MatTableModule
+
+
   ],
-  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},AuthGuard, EventService,UsersServiceService],
+  providers: [AuthService,{provide:HTTP_INTERCEPTORS,useClass:TokenInterceptor,multi:true},UsersServiceService,AuthGuard, EventService,UsersServiceService,DashboardService,DatePipe],
 
   bootstrap: [AppComponent]
 })

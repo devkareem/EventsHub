@@ -13,8 +13,11 @@ router.get('/users', async (req, res) => {
     res.status(200).json({ status: 'OK', data: result });
 });
 router.get('/', async (req, res, next) => {
+
+    const userId = req.user._id;
     try {
-        let result = await dbCol.find({});
+        let result = await dbCol.find({ 'owner._id': userId });
+
         res.status(200).json({ status: 'OK', data: result });
     }
     catch (err) {
@@ -26,6 +29,8 @@ router.get('/', async (req, res, next) => {
 )
 // Retrieve event with the given id from database
 router.get('/:eventId', async (req, res, next) => {
+
+
     try {
         const id = new mongo.ObjectID(req.params.eventId);
         const result = await dbCol.findById({ _id: id });
@@ -57,7 +62,9 @@ router.put('/:eventId', async (req, res, next) => {
         const data = await dbCol.where({ _id: id }).update({
             $set: {
                 'title': body.title, 'description': body.description,
-                'startTime': body.startTime, 'endTime': body.endTime, 'owner': body.owner
+
+                'startTime': body.startTime, 'endTime': body.endTime, 'invaitedUsers': body.invaitedUsers
+
             }
         });
         res.json(data);

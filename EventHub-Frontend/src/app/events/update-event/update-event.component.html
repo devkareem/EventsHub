@@ -1,0 +1,58 @@
+
+
+
+
+<fieldset class="col-sm-8 scheduler-border">
+  <legend class="scheduler-border"><strong>Create an Event  </strong></legend>
+  
+  <form [formGroup]="eventForm" (ngSubmit)="onSubmit()">
+    <!-- Title -->
+    <div>
+    <mat-form-field class="title">
+          
+          <input matInput    type="text" placeholder="Enter Title" id="title" formControlName="title">
+        </mat-form-field>
+  
+      </div> 
+      <!-- Description -->
+    <div>
+        <mat-form-field class="description">
+              
+              <input matInput  type="text" placeholder="Enter Description" id="description" formControlName="description">
+            </mat-form-field>
+      
+          </div>  
+          <!-- Start Time -->
+    <div>
+        <mat-form-field class="title">
+              
+              <input matInput  type="datetime-local"  placeholder="Enter Start Time" id="startTime" formControlName="startTime">
+            </mat-form-field>
+      
+          </div> 
+  
+  
+          <!-- End Time -->
+    <div>
+        <mat-form-field class="title">
+              
+              <input matInput  type="datetime-local"  placeholder="Enter End Time" id="startTime" formControlName="endTime">
+            </mat-form-field>
+      
+          </div> 
+
+  
+    
+    
+  <div>
+  <mat-form-field>
+      <mat-label>Add Invitees</mat-label>
+      <mat-select  formControlName="invaitedUsers" multiple>
+        <mat-option *ngFor="let user of (users | async)?.data" [value]="user">{{user.name}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </div>
+  <button type="submit" mat-raised-button color="blue" [disabled]="!eventForm.valid" >Save</button>
+  <a mat-raised-button color="warn" [routerLink]="['/events']">Cancel</a>
+  </form>
+  </fieldset>

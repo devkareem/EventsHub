@@ -7,6 +7,8 @@ const authMiddle=require('./Middlewares/auth');
 var cors = require('cors')
 const helmet=require('helmet');
 const dbConnect=require('./Middlewares/dbConnect');
+
+const dashBord=require('./Routers/dashBord');
 // 
 const app=express();
 
@@ -22,6 +24,8 @@ app.use(dbConnect);
 // app.all("*",authMiddle);
 app.use('/api/auth',auth);
 app.use('/api/events',authMiddle,router);
+app.use('/api/dashbord',authMiddle,dashBord);
+
 app.use('/users',authMiddle,require('./Routers/usersRouter'));
 
 app.post('/register',async (req,res) => {
