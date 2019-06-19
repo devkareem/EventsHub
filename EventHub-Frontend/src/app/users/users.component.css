@@ -12,3 +12,12 @@
     margin: auto;
     padding: 10px
   }
+
+  .registarClass{
+    width: 500px;
+    margin: auto;
+    padding: 10px;
+    border-color: #673ab7;
+    border-style: groove;
+    border-radius: 21px;
+  }

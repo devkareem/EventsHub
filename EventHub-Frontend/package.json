@@ -22,11 +22,8 @@
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
     "@auth0/angular-jwt": "^2.1.0",
-
     "libphonenumber-js": "^1.7.19",
-
     "@progress/kendo-angular-scheduler": "^0.13.3",
-
     "ngx-toaster": "^1.0.1",
     "ngx-toastr": "^10.0.4",
     "rxjs": "~6.4.0",

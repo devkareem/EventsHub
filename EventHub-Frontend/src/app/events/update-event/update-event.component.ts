@@ -55,9 +55,9 @@ export class UpdateEventComponent implements OnDestroy {
 
   }
   ngOnDestroy(): void {
-    this.paramsub.unsubscribe();
-    this.currentEventSub.unsubscribe();
-    this.updateSub.unsubscribe();
+    if(this.paramsub)this.paramsub.unsubscribe();
+   if(this.currentEventSub) this.currentEventSub.unsubscribe();
+   if(this.updateSub)this.updateSub.unsubscribe();
   }
 
 }

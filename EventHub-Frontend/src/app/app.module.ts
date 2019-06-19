@@ -33,13 +33,15 @@ import { PhoneFormatPipe } from './users/phone-format.pipe';
 
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSelectModule} from '@angular/material/select';
-import { UsersServiceService } from './Services/users-service.service';
+import { UsersServiceService } from './services/users-service.service';
 import { UpdateEventComponent } from './events/update-event/update-event.component';
 import { SchedulerModule } from '@progress/kendo-angular-scheduler';
 import { DashboardService } from './dashboard.service';
 import { CreateEventComponent } from './events/create-event/create-event.component';
 import {MatTableModule} from '@angular/material/table';
 import { DatePipe } from '@angular/common';
+import { InvitedEventsComponent } from './user-event/invited-events/invited-events.component';
+import { IsInvitedDirective } from './user-event/is-invited.directive';
 
 
 const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
@@ -49,8 +51,9 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
 {path:'events/update/:id',component:UpdateEventComponent,canActivate:[AuthGuard]},
 {path:'events/create',component:CreateEventComponent,canActivate:[AuthGuard]},
 {path:'users',component:UsersComponent},
-{path:'users/edit',component:UpdateUserComponent},
-{path:'users/invitedevents',component:UserEventComponent},
+{path:'users/edit',component:UpdateUserComponent,canActivate:[AuthGuard]},
+{path:'users/invitedevents',component:InvitedEventsComponent,canActivate:[AuthGuard]},
+{path:'users/invitedevents/show/:id',component:UserEventComponent,canActivate:[AuthGuard]},
 {path:'**',redirectTo:'Home'}];
 
 
@@ -69,7 +72,9 @@ const MY_ROUTE:Routes=[{path:'',redirectTo:'Home',pathMatch:'full'},
     PhoneFormatPipe,
 
     UpdateEventComponent,
-    CreateEventComponent
+    CreateEventComponent,
+    InvitedEventsComponent,
+    IsInvitedDirective
 
   ],
   imports: [
